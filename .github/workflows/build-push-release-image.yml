@@ -18,12 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build project
-        run: make quick-release
-        env:
-          KUBE_DOCKER_REGISTRY: "ghcr.io"
-          KUBE_FASTBUILD: "false"
-          KUBE_RELEASE_RUN_TESTS: "n"
-          WAHT: "cmd/kubelet"
+        run: make quick-release KUBE_RELEASE_RUN_TESTS="n" KUBE_BUILD_PLATFORMS="linux/amd64"
       
       - name: Image digest
         run: echo "Successfully pushed ghcr.io/saymololy/kubernetes:v1.22.17"
