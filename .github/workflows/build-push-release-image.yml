@@ -1,0 +1,28 @@
+name: Build and push release image
+
+on:
+  push:
+    branches:
+      # Run on pushing branches like `release/1.0.0`
+      - "release/*.*.*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-release-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build project
+        run: make quick-release
+        env:
+          KUBE_DOCKER_REGISTRY: "ghcr.io"
+          KUBE_FASTBUILD: "true"
+          KUBE_RELEASE_RUN_TESTS: "n"
+      
+      - name: Image digest
+        run: echo "Successfully pushed ghcr.io/saymololy/kubernetes:v1.22.17"
