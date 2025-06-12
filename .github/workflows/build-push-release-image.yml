@@ -21,8 +21,9 @@ jobs:
         run: make quick-release
         env:
           KUBE_DOCKER_REGISTRY: "ghcr.io"
-          KUBE_FASTBUILD: "true"
+          KUBE_FASTBUILD: "false"
           KUBE_RELEASE_RUN_TESTS: "n"
+          WAHT: "cmd/kubelet"
       
       - name: Image digest
         run: echo "Successfully pushed ghcr.io/saymololy/kubernetes:v1.22.17"
