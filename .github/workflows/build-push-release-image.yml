@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build project
-        run: make quick-release KUBE_RELEASE_RUN_TESTS="n" KUBE_BUILD_PLATFORMS="linux/amd64"
+        run: KUBE_BUILD_PULL_LATEST_IMAGES=n KUBE_GIT_TREE_STATE=clean KUBE_BUILD_PLATFORMS=linux/amd64 KUBE_BUILD_CONFORMANCE=n KUBE_BUILD_HYPERKUBE=n make release-images GOFLAGS=-v GOGCFLAGS="-N -l"
       
       - name: Image digest
         run: echo "Successfully pushed ghcr.io/saymololy/kubernetes:v1.22.17"
